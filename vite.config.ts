@@ -2,31 +2,27 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 
-// Change this to your GitHub repository name if needed.
-const REPOSITORY_NAME = "inkboard";
+const repoName = "inkboard";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
 
-  base:
-    process.env.NODE_ENV === "production"
-      ? `/${REPOSITORY_NAME}/`
-      : "/",
+  base: mode === "production" ? `/${repoName}/` : "/",
 
   resolve: {
     alias: {
-      "@": resolve(__dirname, "./src"),
+      "@": resolve(__dirname, "src"),
     },
   },
 
   server: {
-    port: 5173,
     open: true,
+    port: 5173,
   },
 
   build: {
-    outDir: "dist",
     sourcemap: true,
+    outDir: "dist",
     emptyOutDir: true,
   },
-});
+}));
